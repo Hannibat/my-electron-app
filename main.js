@@ -1,5 +1,5 @@
-const { app, BrowserWindow, ipcMain } = require('electron/main')
-const path = require('node:path')
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('node:path');
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -8,10 +8,27 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
-  })
-  win.loadFile('index.html')
-}
+  });
+  win.loadFile('index.html');
+};
+
 app.whenReady().then(() => {
-  ipcMain.handle('ping', () => 'pong')
-  createWindow()
-})
+  ipcMain.handle('ping', () => 'pong');
+  createWindow();
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    }
+  });
+});
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
+// Importez et utilisez correctement updateElectronApp
+const { updateElectronApp } = require('update-electron-app');
+updateElectronApp();

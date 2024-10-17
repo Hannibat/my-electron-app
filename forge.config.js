@@ -49,8 +49,8 @@ module.exports = {
       name: '@electron-forge/publisher-github',
       config: {
         repository: {
-          owner: 'hannibat',
-          name: 'testelectron'
+          owner: 'Hannibat',
+          name: 'my-electron-app'
         },
         prerelease: false,
         draft: true
